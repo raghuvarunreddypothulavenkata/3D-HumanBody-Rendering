@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Oncology Research</title>
+
+<!-- Bootstrap core CSS -->
+<link href="css/bootstrap.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="css/main.css" rel="stylesheet">
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/animate-custom.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+<script src="js/jquery.min.js"></script>
+<script src="build/three.min.js"></script>
+<script src="js/loaders/ColladaLoader.js"></script>
+<script src="js/controls/OrbitControls.js"></script>
+<script type="text/javascript" src="js/modernizr.custom.js"></script>
+
+</head>
+
+<body data-spy="scroll" data-offset="0" data-target="#navbar-main">
+<div id="navbar-main"> 
+  <!-- Fixed navbar -->
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+        <a class="navbar-brand" href="index.html">OncoStudy Inc</a> </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="index.html" class="smoothScroll">Home</a></li>
+		  <li><a href="human-body.html" class="smoothScroll">3D Human Body</a></li>
+          <li> <a href="about-us.html" class="smoothScroll"> About Us</a></li>
+          <li> <a href="cancer-statistics.html" class="smoothScroll"> Cancer Statistics</a></li>
+          <li> <a href="contact-us.html" class="smoothScroll"> Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+	var scene, camera, renderer, skindae, humandae, loader;
+	init();
+	animate();
+	function init() {
+		scene = new THREE.Scene();
+		var WIDTH = window.innerWidth,
+		HEIGHT = window.innerHeight;
+		renderer = new THREE.WebGLRenderer({antialias:true});
+		renderer.setSize(WIDTH, HEIGHT);
+		document.body.appendChild(renderer.domElement);
+		camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 0.1, 10000);
+		camera.position.set(50,150,100);
+		scene.add(camera);
+				
+		window.addEventListener('resize', function() {
+			var WIDTH = window.innerWidth,
+			HEIGHT = window.innerHeight;
+			renderer.setSize(WIDTH, HEIGHT);
+			camera.aspect = WIDTH / HEIGHT;
+			camera.updateProjectionMatrix();
+		});
+		var light = new THREE.PointLight(0xfffff3, 0.8);
+		light.position.set(-100,200,100);
+		scene.add(light);
+		var sphereSize = 1;
+		var pointLightHelper = new THREE.PointLightHelper( light, sphereSize );
+		scene.add( pointLightHelper );
+		var light2 = new THREE.PointLight(0xd7f0ff, 0.2);
+		light2.position.set(200,200,100);
+		scene.add(light2);
+		var sphereSize = 1;
+		var pointLightHelper2 = new THREE.PointLightHelper( light2, sphereSize );
+		scene.add( pointLightHelper2 );
+		var light3 = new THREE.PointLight(0xFFFFFF, 0.5);
+		light3.position.set(150,200,-100);
+		scene.add(light3);
+		var sphereSize = 1;
+		var pointLightHelper3 = new THREE.PointLightHelper( light3, sphereSize );
+		scene.add( pointLightHelper3 );
+		loader = new THREE.ColladaLoader();
+		loader.options.convertUpAxis = true;
+		loader.load( 'models/humanSkin.dae', function ( collada ) {
+			skindae = collada.scene;
+			var skin = collada.skins[ 0 ];
+			skindae.position.set(0,-50,0);//x,z,y- if you think in blender dimensions ;)
+			skindae.scale.set(11,11,11);
+			scene.add(skindae);
+		});
+		controls = new THREE.OrbitControls(camera, renderer.domElement);
+		document.addEventListener( 'contextmenu', onDocumentContextMenu, false );
+	}
+	function onDocumentContextMenu() {
+		if(typeof skindae === 'object' & skindae != null){
+			scene.remove(skindae);
+			skindae = null;
+			loader.load( 'models/myHuman.dae', function ( collada ) {
+				humandae = collada.scene;
+				var skin = collada.skins[ 0 ];
+				humandae.position.set(0,-40,0);//x,z,y- if you think in blender dimensions ;)
+				humandae.scale.set(11,11,11);
+				scene.add(humandae);
+			});
+		}
+		else {
+			if(typeof humandae === 'object') {
+				scene.remove(humandae);
+				humandae = null;
+				loader.load( 'models/humanSkin.dae', function ( collada ) {
+					skindae = collada.scene;
+					var skin = collada.skins[ 0 ];
+					skindae.position.set(0,-50,0);//x,z,y- if you think in blender dimensions ;)
+					skindae.scale.set(11,11,11);
+					scene.add(skindae);
+				});
+			}
+		}
+	}
+	function animate() {
+		requestAnimationFrame(animate);
+		renderer.render(scene, camera);
+		controls.update();
+	}		
+</script>
+<div id="footerwrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8"> <span class="copyright">Copyright &copy; 2015 OncoStudy Inc. Design by WebDevelopers</span> </div>
+      <div class="col-md-4">
+        <ul class="list-inline social-buttons">
+          <li><a href="#"><i class="fa fa-twitter"></i></a> </li>
+          <li><a href="#"><i class="fa fa-facebook"></i></a> </li>
+          <li><a href="#"><i class="fa fa-google-plus"></i></a> </li>
+          <li><a href="#"><i class="fa fa-linkedin"></i></a> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/bootstrap.min.js"></script> 
+<script type="text/javascript" src="js/retina.js"></script> 
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script> 
+<script type="text/javascript" src="js/smoothscroll.js"></script> 
+<script type="text/javascript" src="js/jquery-func.js"></script>
+</body>
+</html>

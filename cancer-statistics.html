@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Oncology Research</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="css/bootstrap.css" rel="stylesheet">
+
+	<!-- Custom CSS -->
+	<link href="css/main.css" rel="stylesheet">
+	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<link href="css/animate-custom.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+	<script type='text/javascript' src="https://www.google.com/jsapi"></script>
+	<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'></script>
+	<script type='text/javascript' src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['sankey']}]}"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery-1.11.2.min.js"></script>
+	<script src="js/myScript.js"></script>
+	<script type="text/javascript" src="js/modernizr.custom.js"></script>
+	<script>
+		function loadMe() {
+			var qs = (function(a) {
+				if (a == "") return {};
+				var b = {};
+				for (var i = 0; i < a.length; ++i)
+				{
+					var p=a[i].split('=', 2);
+					if (p.length == 1)
+						b[p[0]] = "";
+					else
+						b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+				}
+				return b;
+			})(window.location.search.substr(1).split('&'));
+			if(!!qs["organ"]){
+				document.getElementById(qs["organ"]).style.display = "block";
+			}
+			else {
+				document.getElementById("imagesCarousel").style.display = "block";
+			}
+		}
+		
+		  google.load("visualization", "1.1", {packages:["bar"]});
+		  google.setOnLoadCallback(drawStuff);
+
+		  function drawStuff() {
+			var data = new google.visualization.arrayToDataTable([
+			['Cancer', 'New cases diagnosed in 2012', 'Per cent of all cancers'],
+			  ['Lung', 1825, 13.0],
+			  ['Breast', 1677, 11.9],
+			  ['Colorectum', 1361, 9.7],
+			  ['Prostate', 1112, 7.9],
+			  ['Stomach', 952, 6.8]
+			]);
+
+			var options = {
+			  width: 900,
+			  chart: {
+				title: 'Worldwide data | World Cancer Research Fund International',
+				subtitle: 'new cases on the left, percentage on the right'
+			  },
+			  series: {
+				0: { axis: 'newcases' }, // Bind series 0 to an axis named 'newcases'.
+				1: { axis: 'percent' } // Bind series 1 to an axis named 'percent'.
+			  },
+			  axes: {
+				y: {
+				  newcases: {label: 'number of new cases'}, // Left y-axis.
+				  percent: {side: 'right', label: 'percent of all cancers'} // Right y-axis.
+				}
+			  }
+			};
+
+		  var chart = new google.charts.Bar(document.getElementById('dual_y_div'));
+		  chart.draw(data, options);
+		};
+		
+		google.load("visualization", "1", {packages:["geochart"]});
+		  google.setOnLoadCallback(drawRegionsMap);
+
+		  function drawRegionsMap() {
+
+			var data = google.visualization.arrayToDataTable
+			([
+			  ['State', 'No. of people diagnosed'],
+			  ['US-AL', 10233],
+			  ['US-AK', 935],
+			  ['US-AZ', 10690],
+			  ['US-AR', 6497],
+			  ['US-CA', 56448],
+			  ['US-CO', 7051],
+			  ['US-CT', 6837],
+			  ['US-DE', 1905],
+			  ['US-FL', 41681],
+			  ['US-GA', 15602],
+			  ['US-HI', 2278],
+			  ['US-ID', 2573],
+			  ['US-IL', 24006],
+			  ['US-IN', 13180],
+			  ['US-IA', 6481],
+			  ['US-KS', 5440],
+			  ['US-KY', 9733],
+			  ['US-LA', 9233],
+			  ['US-ME', 3201],
+			  ['US-MD', 10249],
+			  ['US-MA', 12895],
+			  ['US-MI', 20420],
+			  ['US-MN', 9489],
+			  ['US-MS', 6278],
+			  ['US-MO', 12473],
+			  ['US-MT', 2022],
+			  ['US-NE', 3410],
+			  ['US-NV', 4605],
+			  ['US-NH', 2740],
+			  ['US-NJ', 16708],
+			  ['US-NM', 3328],
+			  ['US-NY', 35469],
+			  ['US-NC', 18284],
+			  ['US-ND', 1321],
+			  ['US-OH', 25140],
+			  ['US-OK', 7997],
+			  ['US-OR', 7802],
+			  ['US-PA', 28895],
+			  ['US-RI', 2170],
+			  ['US-SC', 9543],
+			  ['US-SD', 1665],
+			  ['US-TN', 13562],
+			  ['US-TX', 37351],
+			  ['US-UT', 2746],
+			  ['US-VT', 1347],
+			  ['US-VA', 14374],
+			  ['US-WA', 12002],
+			  ['US-WV', 4782],
+			  ['US-WI', 11608],
+			  ['US-WY', 936 ] 
+			]);
+
+			var options = {sizeAxis: { minValue: 0, maxValue: 100 },
+			colorAxis: {colors: ['#5C8AE6', 'yellow','#E60000']},
+					datalessRegionColor: '#f8bbd0',
+			defaultColor: '#f5f5f5',
+			region: 'US',
+			//region location: ['US-AK'],
+			resolution: 'provinces', 
+			displayMode: 'region',
+			};
+
+			var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+			chart.draw(data, options);
+		  }
+		  
+		  google.load("visualization", "1.1", {packages:["sankey"]});
+		  google.setOnLoadCallback(drawChart);
+
+		  function drawChart() {
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'From');
+			data.addColumn('string', 'To');
+			data.addColumn('number', 'Rate');
+			data.addRows([
+						  [ '2010', '1-4', 0.2],
+						  [ '1-4', 'Female',0.2 ],
+						  [ 'Female', 'Stomach',0.2 ],
+						  [ 'Stomach', 'Mortality',0.2],
+						  
+						  [ '2010', '1-4', 0.3 ],
+						  [ '1-4', 'Female',0.3 ],
+						  [ 'Female', 'Stomach',0.3 ],
+						  [ 'Stomach', 'Incidence',0.3 ],
+						  
+						  [ '2010', '1-4', 0.3 ],
+						  [ '1-4', 'Female',0.3 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct',0.3 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence',0.3 ],
+						  
+			//26.4
+						  [ '2010', '1-4', 0.3 ],
+						  [ '1-4', 'Female',0.3 ],
+						  [ 'Female', 'Brain and Other Nervous System',0.3 ],
+						  [ 'Brain and Other Nervous System', 'Mortality',0.3 ],
+						 
+						  
+						 [ '2010', '1-4', 4.3 ],
+						  [ '1-4', 'Female', 4.3 ],
+						  [ 'Female', 'Brain and Other Nervous System', 4.3 ],
+						  [ 'Brain and Other Nervous System', 'Incidence', 4.3 ],
+						  
+						  [ '2010', '20-24', 0.4 ],
+						  [ '20-24', 'Female', 0.4 ],
+						  [ 'Female', 'Brain and Other Nervous System', 0.4],
+						  [ 'Brain and Other Nervous System', 'Mortality', 0.4],
+						  
+						  [ '2010', '20-24', 2.0 ],
+						  [ '20-24', 'Female', 2.0 ],
+						  [ 'Female', 'Brain and Other Nervous System', 2.0],
+						  [ 'Brain and Other Nervous System', 'Incidence', 2.0],
+						  
+						  [ '2010', '20-24', 0.2 ],
+						  [ '20-24', 'Female', 0.2 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 0.2],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 0.2],
+						  
+						  [ '2010', '20-24', 0.2 ],
+						  [ '20-24', 'Female', 0.2 ],
+						  [ 'Female', 'Pancreas', 0.2],
+						  [ 'Pancreas', 'Incidence', 0.2],
+						  
+						  [ '2010', '20-24', 0.2 ],
+						  [ '20-24', 'Female', 0.2 ],
+						  [ 'Female', 'Stomach', 0.2],
+						  [ 'Stomach', 'Incidence', 0.2],
+						  
+						  [ '2010', '20-24', 8.9 ],
+						  [ '20-24', 'Female', 8.9 ],
+						  [ 'Female', 'Thyroid', 8.9],
+						  [ 'Thyroid', 'Incidence', 8.9],
+						  
+						  [ '2010', '25-29', 0.5 ],
+						  [ '25-29', 'Female', 0.5 ],
+						  [ 'Female', 'Brain and Other Nervous System', 0.5],
+						  [ 'Brain and Other Nervous System', 'Mortality', 0.5],
+						  
+						  [ '2010', '25-29', 2.6 ],
+						  [ '25-29', 'Female', 2.6 ],
+						  [ 'Female', 'Brain and Other Nervous System', 2.6],
+						  [ 'Brain and Other Nervous System', 'Incidence', 2.6],
+						  
+						  [ '2010', '25-29', 0.2 ],
+						  [ '25-29', 'Female', 0.2 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 0.2],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 0.2],
+						  
+						  [ '2010', '25-29', 0.2 ],
+						  [ '25-29', 'Female', 0.2 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 0.2],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 0.2],
+						  
+						  [ '2010', '25-29', 0.4 ],
+						  [ '25-29', 'Female', 0.4 ],
+						  [ 'Female', 'Pancreas', 0.4],
+						  [ 'Pancreas', 'Incidence', 0.4],
+						  
+						  [ '2010', '25-29', 0.2 ],
+						  [ '25-29', 'Female', 0.2 ],
+						  [ 'Female', 'Stomach', 0.2],
+						  [ 'Stomach', 'Mortality', 0.2],
+						  
+						  [ '2010', '25-29', 0.4 ],
+						  [ '25-29', 'Female', 0.4 ],
+						  [ 'Female', 'Stomach', 0.4],
+						  [ 'Stomach', 'Incidence', 0.4],
+						  
+						  [ '2010', '25-29', 17.3 ],
+						  [ '25-29', 'Female', 17.3 ],
+						  [ 'Female', 'Thyroid', 17.3],
+						  [ 'Thyroid', 'Incidence', 17.3],
+						  
+						  [ '2010', '40-44', 0.7 ],
+						  [ '40-44', 'Female', 0.7 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 0.7],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Mortality', 0.7],
+						  
+						  [ '2010', '40-44', 1.0 ],
+						  [ '40-44', 'Female', 1.0],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 1.0],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 1.0],
+						  
+						  [ '2010', '40-44', 2.2 ],
+						  [ '40-44', 'Female', 2.2],
+						  [ 'Female', 'Pancreas', 2.2],
+						  [ 'Pancreas', 'Incidence', 2.2],
+						  
+						  [ '2010', '45-49', 2.4 ],
+						  [ '45-49', 'Female',2.4 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 2.4],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Mortality', 2.4],
+						  
+						  //2009
+						  
+						   [ '2009', '1-4', 0.6 ],
+						  [ '1-4', 'Female',0.6 ],
+						  [ 'Female', 'Brain and Other Nervous System',0.6 ],
+						  [ 'Brain and Other Nervous System', 'Mortality',0.6 ],
+						  
+						  [ '2009', '1-4', 3.9 ],
+						  [ '1-4', 'Female',3.9 ],
+						  [ 'Female', 'Brain and Other Nervous System',3.9 ],
+						  [ 'Brain and Other Nervous System', 'Incidence',3.9 ],
+						  
+						  [ '2009', '1-4', 0.3 ],
+						  [ '1-4', 'Female',0.3 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 0.3],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 0.3],
+						  
+						  [ '2009', '5-9', 0.9 ],
+						  [ '5-9', 'Female',0.9 ],
+						  [ 'Female', 'Brain and Other Nervous System',0.9 ],
+						  [ 'Brain and Other Nervous System', 'Mortality',0.9 ],
+						  
+						  [ '2009', '5-9', 3.2 ],
+						  [ '5-9', 'Female',3.2 ],
+						  [ 'Female', 'Brain and Other Nervous System',3.2 ],
+						  [ 'Brain and Other Nervous System', 'Incidence',3.2],
+						  
+						  [ '2009', '20-24', 0.4 ],
+						  [ '20-24', 'Female',0.4 ],
+						  [ 'Female', 'Brain and Other Nervous System',0.4 ],
+						  [ 'Brain and Other Nervous System', 'Mortality',0.4],
+						  
+						  [ '2009', '20-24', 1.9 ],
+						  [ '20-24', 'Female', 1.9 ],
+						  [ 'Female', 'Brain and Other Nervous System', 1.9 ],
+						  [ 'Brain and Other Nervous System', 'Incidence', 1.9 ],
+						  
+						  [ '2009', '20-24', 0.2 ],
+						  [ '20-24', 'Female', 0.2 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 0.2 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 0.2 ],
+						  
+						  [ '2009', '20-24', 0.2 ],
+						  [ '20-24', 'Female', 0.2 ],
+						  [ 'Female', 'Pancreas', 0.2 ],
+						  [ 'Pancreas', 'Incidence', 0.2 ],
+						  
+						  [ '2009', '20-24', 0.2 ],
+						  [ '20-24', 'Female', 0.2 ],
+						  [ 'Female', 'Stomach', 0.2 ],
+						  [ 'Stomach', 'Incidence', 0.2 ],
+						  
+						  [ '2009', '20-24', 9.1 ],
+						  [ '20-24', 'Female', 9.1 ],
+						  [ 'Female', 'Thyroid', 9.1 ],
+						  [ 'Thyroid', 'Incidence', 9.1 ],
+						  
+						  [ '2009', '25-29', 0.6 ],
+						  [ '25-29', 'Female', 0.6 ],
+						  [ 'Female', 'Brain and Other Nervous System', 0.6 ],
+						  [ 'Brain and Other Nervous System', 'Mortality', 0.6 ],
+						  
+						  [ '2009', '25-29', 3.0 ],
+						  [ '25-29', 'Female', 3.0 ],
+						  [ 'Female', 'Brain and Other Nervous System', 3.0 ],
+						  [ 'Brain and Other Nervous System', 'Incidence', 3.0 ],
+						  
+						  [ '2009', '25-29', 0.2 ],
+						  [ '25-29', 'Female', 0.2 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 0.2 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Mortality', 0.2 ],
+						  
+						  [ '2009', '25-29', 0.3 ],
+						  [ '25-29', 'Female', 0.3 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 0.3 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 0.3 ],
+						  
+						  [ '2009', '25-29', 0.3 ],
+						  [ '25-29', 'Female', 0.3 ],
+						  [ 'Female', 'Pancreas', 0.3 ],
+						  [ 'Pancreas', 'Incidence', 0.3 ],
+						  
+						  [ '2009', '25-29', 0.2 ],
+						  [ '25-29', 'Female', 0.2 ],
+						  [ 'Female', 'Stomach', 0.2 ],
+						  [ 'Stomach', 'Mortality', 0.2 ],
+						  
+						  [ '2009', '25-29', 0.4 ],
+						  [ '25-29', 'Female', 0.4 ],
+						  [ 'Female', 'Stomach', 0.4 ],
+						  [ 'Stomach', 'Incidence', 0.4 ],
+						  
+						  [ '2009', '25-29', 17.0 ],
+						  [ '25-29', 'Female', 17.0 ],
+						  [ 'Female', 'Thyroid', 17.0 ],
+						  [ 'Thyroid', 'Incidence', 17.0 ],
+						  
+						  [ '2009', '30-34', 1.0 ],
+						  [ '30-34', 'Female', 1.0 ],
+						  [ 'Female', 'Brain and Other Nervous System', 1.0 ],
+						  [ 'Brain and Other Nervous System', 'Mortality', 1.0 ],
+						  
+						  [ '2009', '30-34', 3.1 ],
+						  [ '30-34', 'Female', 3.1 ],
+						  [ 'Female', 'Brain and Other Nervous System', 3.1 ],
+						  [ 'Brain and Other Nervous System', 'Incidence', 3.1 ],
+						  
+						  [ '2009', '30-34', 0.2 ],
+						  [ '30-34', 'Female', 0.2 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 0.2 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Mortality', 0.2 ],
+						  
+						  [ '2009', '30-34', 0.5 ],
+						  [ '30-34', 'Female', 0.5 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 0.5 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 0.5 ],
+						  
+						  
+						  [ '2009', '30-34', 0.2 ],
+						  [ '30-34', 'Female', 0.2 ],
+						  [ 'Female', 'Pancreas', 0.2 ],
+						  [ 'Pancreas', 'Mortality', 0.2 ],
+						  
+						  [ '2009', '30-34', 0.6 ],
+						  [ '30-34', 'Female', 0.6 ],
+						  [ 'Female', 'Pancreas', 0.6 ],
+						  [ 'Pancreas', 'Incidence', 0.6 ],
+						  
+						  [ '2009', '30-34', 0.4 ],
+						  [ '30-34', 'Female', 0.4 ],
+						  [ 'Female', 'Stomach', 0.4 ],
+						  [ 'Stomach', 'Mortality', 0.4 ],
+						  
+						  [ '2009', '30-34', 0.8 ],
+						  [ '30-34', 'Female', 0.8 ],
+						  [ 'Female', 'Stomach', 0.8 ],
+						  [ 'Stomach', 'Incidence', 0.8 ],
+						  
+						  [ '2009', '30-34', 26.0 ],
+						  [ '30-34', 'Female', 26.0 ],
+						  [ 'Female', 'Thyroid', 26.0 ],
+						  [ 'Thyroid', 'Incidence', 26.0 ],
+						  
+						  //27.4
+						  
+						  [ '2009', '35-39', 1.2 ],
+						  [ '35-39', 'Female', 1.2 ],
+						  [ 'Female', 'Brain and Other Nervous System', 1.2],
+						  [ 'Brain and Other Nervous System', 'Mortality', 1.2 ],
+						  
+						  [ '2009', '35-39', 3.2 ],
+						  [ '35-39', 'Female', 3.2 ],
+						  [ 'Female', 'Brain and Other Nervous System', 3.2],
+						  [ 'Brain and Other Nervous System', 'Incidence', 3.2 ],
+						  
+						  [ '2009', '35-39', 0.3 ],
+						  [ '35-39', 'Female', 0.3 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 0.3 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Mortality', 0.3 ],
+						  
+						  [ '2009', '35-39', 0.5 ],
+						  [ '35-39', 'Female', 0.5 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 0.5 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 0.5 ],
+						  
+						  [ '2009', '35-39', 0.5 ],
+						  [ '35-39', 'Female', 0.5 ],
+						  [ 'Female', 'Pancreas', 0.5 ],
+						  [ 'Pancreas', 'Mortality', 0.5 ],
+						  
+						  [ '2009', '35-39', 1.1 ],
+						  [ '35-39', 'Female', 1.1 ],
+						  [ 'Female', 'Pancreas', 1.1 ],
+						  [ 'Pancreas', 'Incidence', 1.1 ],
+						  
+						  [ '2009', '35-39', 0.7 ],
+						  [ '35-39', 'Female', 0.7 ],
+						  [ 'Female', 'Stomach', 0.7 ],
+						  [ 'Stomach', 'Mortality', 0.7 ],
+						  
+						  [ '2009', '35-39', 1.5 ],
+						  [ '35-39', 'Female', 1.5 ],
+						  [ 'Female', 'Stomach', 1.5 ],
+						  [ 'Stomach', 'Incidence', 1.5 ],
+						  
+						  [ '2009', '35-39', 29.4 ],
+						  [ '35-39', 'Female', 29.4 ],
+						  [ 'Female', 'Thyroid', 29.4 ],
+						  [ 'Thyroid', 'Incidence', 29.4 ],
+						  
+						  //40-44
+						  [ '2009', '40-44', 1.8 ],
+						  [ '40-44', 'Female', 1.8 ],
+						  [ 'Female', 'Brain and Other Nervous System', 1.8],
+						  [ 'Brain and Other Nervous System', 'Mortality', 1.8 ],
+						  
+						  [ '2009', '40-44', 3.5 ],
+						  [ '40-44', 'Female', 3.5 ],
+						  [ 'Female', 'Brain and Other Nervous System', 3.5],
+						  [ 'Brain and Other Nervous System', 'Incidence', 3.5 ],
+						  
+						  [ '2009', '40-44', 0.6 ],
+						  [ '40-44', 'Female', 0.6 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 0.6 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Mortality', 0.6 ],
+						  
+						  [ '2009', '40-44', 1.1 ],
+						  [ '40-44', 'Female', 1.1 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 1.1 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 1.1 ],
+						  
+						  [ '2009', '40-44', 1.2 ],
+						  [ '40-44', 'Female', 1.2 ],
+						  [ 'Female', 'Pancreas', 1.2 ],
+						  [ 'Pancreas', 'Mortality', 1.2 ],
+						  
+						  [ '2009', '40-44', 2.2 ],
+						  [ '40-44', 'Female', 2.2 ],
+						  [ 'Female', 'Pancreas', 2.2 ],
+						  [ 'Pancreas', 'Incidence', 2.2 ],
+						  
+						  [ '2009', '40-44', 1.2 ],
+						  [ '40-44', 'Female', 1.2 ],
+						  [ 'Female', 'Stomach', 1.2 ],
+						  [ 'Stomach', 'Mortality', 1.2 ],
+						  
+						  [ '2009', '40-44', 2.4 ],
+						  [ '40-44', 'Female', 2.4 ],
+						  [ 'Female', 'Stomach', 2.4 ],
+						  [ 'Stomach', 'Incidence', 2.4 ],
+						  
+						  [ '2009', '40-44', 32.7 ],
+						  [ '40-44', 'Female', 32.7 ],
+						  [ 'Female', 'Thyroid', 32.7 ],
+						  [ 'Thyroid', 'Incidence', 32.7 ],
+						  
+						  
+						  //45-49
+						  
+						  [ '2009', '45-49', 2.8 ],
+						  [ '45-49', 'Female', 2.8 ],
+						  [ 'Female', 'Brain and Other Nervous System', 2.8],
+						  [ 'Brain and Other Nervous System', 'Mortality', 2.8 ],
+						  
+						  [ '2009', '45-49', 4.8 ],
+						  [ '45-49', 'Female', 4.8 ],
+						  [ 'Female', 'Brain and Other Nervous System', 4.8],
+						  [ 'Brain and Other Nervous System', 'Incidence', 4.8 ],
+						  
+						  [ '2009', '45-49', 1.5 ],
+						  [ '45-49', 'Female', 1.5 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 1.5 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Mortality', 1.5 ],
+						  
+						  [ '2009', '45-49', 2.4 ],
+						  [ '45-49', 'Female', 2.4 ],
+						  [ 'Female', 'Liver and Intrahepatic Bile Duct', 2.4 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 2.4 ],
+						  
+						  [ '2009', '45-49', 3.4 ],
+						  [ '45-49', 'Female', 3.4 ],
+						  [ 'Female', 'Pancreas', 3.4 ],
+						  [ 'Pancreas', 'Mortality', 3.4 ],
+						  
+						  [ '2009', '45-49', 4.7 ],
+						  [ '45-49', 'Female', 4.7 ],
+						  [ 'Female', 'Pancreas', 4.7 ],
+						  [ 'Pancreas', 'Incidence', 4.7 ],
+						  
+						  [ '2009', '45-49', 1.5 ],
+						  [ '45-49', 'Female', 1.5 ],
+						  [ 'Female', 'Stomach', 1.5 ],
+						  [ 'Stomach', 'Mortality', 1.5 ],
+						  
+						  [ '2009', '45-49', 3.5 ],
+						  [ '45-49', 'Female', 3.5 ],
+						  [ 'Female', 'Stomach', 3.5 ],
+						  [ 'Stomach', 'Incidence', 3.5 ],
+						  
+						  [ '2009', '45-49', 0.3 ],
+						  [ '45-49', 'Female', 0.3 ],
+						  [ 'Female', 'Thyroid', 0.3 ],
+						  [ 'Thyroid', 'Incidence', 0.3 ],
+						  
+						  [ '2009', '45-49', 33.5 ],
+						  [ '45-49', 'Female', 33.5 ],
+						  [ 'Female', 'Thyroid', 33.5 ],
+						  [ 'Thyroid', 'Incidence', 33.5 ],
+						  
+						  ///---------------------------
+						  [ '2010', '1-4', 1 ],
+						  [ '1-4', 'Male',1 ],
+						  [ 'Male', 'Stomach',1 ],
+						  [ 'Stomach', 'Mortality', 1],
+						  [ 'Stomach', 'Incidence',1 ],
+						  
+						  [ '2010', '1-4', 0.9 ],
+						  [ '1-4', 'Male',0.9 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct',0.9 ],                       
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence',0.9 ],
+			 
+						  //26.4
+						  [ '2010', '1-4', 0.7 ],
+						  [ '1-4', 'Male', 0.7 ],
+						  [ 'Male', 'Brain and Other Nervous System', 0.7 ],
+						  [ 'Brain and Other Nervous System', 'Mortality', 0.7 ],
+						  
+						  [ '2010', '1-4', 4.6 ],
+						  [ '1-4', 'Male', 4.6 ],
+						  [ 'Male', 'Brain and Other Nervous System', 4.6 ],
+						  [ 'Brain and Other Nervous System', 'Incidence', 4.6 ],
+						  
+						  [ '2010', '5-9', 0.9 ],
+						  [ '5-9', 'Male', 0.9 ],
+						  [ 'Male', 'Brain and Other Nervous System', 0.9],
+						  [ 'Brain and Other Nervous System', 'Mortality', 0.9 ],
+						  
+						  [ '2010', '5-9', 3.5 ],
+						  [ '5-9', 'Male', 3.5 ],
+						  [ 'Male', 'Brain and Other Nervous System', 3.5],
+						  [ 'Brain and Other Nervous System', 'Incidence', 3.5 ],
+						  
+						  [ '2010', '20-24', 0.6 ],
+						  [ '20-24', 'Male', 0.6 ],
+						  [ 'Male', 'Brain and Other Nervous System', 0.6],
+						  [ 'Brain and Other Nervous System', 'Mortality', 0.6 ],
+						  
+						  [ '2010', '20-24', 2.4 ],
+						  [ '20-24', 'Male', 2.4 ],
+						  [ 'Male', 'Brain and Other Nervous System', 2.4],
+						  [ 'Brain and Other Nervous System', 'Incidence', 2.4 ],
+						  
+						  [ '2010', '20-24', 0.2 ],
+						  [ '20-24', 'Male', 0.2 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 0.2],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 0.2 ],
+						  
+						  [ '2010', '20-24', 0.2 ],
+						  [ '20-24', 'Male', 0.2 ],
+						  [ 'Male', 'Stomach', 0.2],
+						  [ 'Stomach', 'Incidence', 0.2 ],
+						  
+						  [ '2010', '20-24', 1.8 ],
+						  [ '20-24', 'Male', 1.8 ],
+						  [ 'Male', 'Thyroid', 1.8],
+						  [ 'Thyroid', 'Incidence', 1.8 ],
+						  
+						  [ '2010', '25-29', 0.9 ],
+						  [ '25-29', 'Male', 0.9 ],
+						  [ 'Male', 'Brain and Other Nervous System', 0.9],
+						  [ 'Brain and Other Nervous System', 'Mortality', 0.9],
+						  
+						  [ '2010', '25-29', 3.2 ],
+						  [ '25-29', 'Male', 3.2 ],
+						  [ 'Male', 'Brain and Other Nervous System', 3.2],
+						  [ 'Brain and Other Nervous System', 'Incidence', 3.2],
+						  
+						  [ '2010', '25-29', 0.2 ],
+						  [ '25-29', 'Male', 0.2 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 0.2],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Mortality', 0.2],
+						  
+						  [ '2010', '25-29', 0.3 ],
+						  [ '25-29', 'Male', 0.3 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 0.3],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 0.3],
+						  
+						  [ '2010', '25-29', 0.2 ],
+						  [ '25-29', 'Male', 0.2 ],
+						  [ 'Male', 'Pancreas', 0.2],
+						  [ 'Pancreas', 'Incidence', 0.2],
+						  
+						  [ '2010', '25-29', 0.2 ],
+						  [ '25-29', 'Male', 0.2 ],
+						  [ 'Male', 'Stomach', 0.2],
+						  [ 'Stomach', 'Mortality', 0.2],
+						  
+						  [ '2010', '25-29', 0.4 ],
+						  [ '25-29', 'Male', 0.4],
+						  [ 'Male', 'Stomach', 0.4],
+						  [ 'Stomach', 'Incidence', 0.4],
+						  
+						  [ '2010', '25-29', 3.0 ],
+						  [ '25-29', 'Male', 3.0],
+						  [ 'Male', 'Thyroid', 3.0],
+						  [ 'Thyroid', 'Incidence', 3.0],
+						  
+						  
+						  [ '2010', '45-49', 4.6 ],
+						  [ '45-49', 'Male',4.6 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 4.6],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Mortality', 4.6],
+						  
+						  
+						  //2009
+						  [ '2009', '1-4', 0.5 ],
+						  [ '1-4', 'Male', 0.5 ],
+						  [ 'Male', 'Brain and Other Nervous System', 0.5 ],
+						  [ 'Brain and Other Nervous System', 'Mortality', 0.5 ],
+						  
+						  [ '2009', '1-4', 4.5 ],
+						  [ '1-4', 'Male', 4.5 ],
+						  [ 'Male', 'Brain and Other Nervous System', 4.5 ],
+						  [ 'Brain and Other Nervous System', 'Incidence', 4.5 ],
+
+						  [ '2009', '1-4', 0.7 ],
+						  [ '1-4', 'Male',0.7 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 0.7],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 0.7],
+						  
+						  [ '2009', '5-9', 3.8 ],
+						  [ '5-9', 'Male',3.8 ],
+						  [ 'Male', 'Brain and Other Nervous System',3.8 ],
+						  [ 'Brain and Other Nervous System', 'Incidence',3.8],
+						  
+						  [ '2009', '5-9', 1.0 ],
+						  [ '5-9', 'Male',1.0 ],
+						  [ 'Male', 'Brain and Other Nervous System',1.0 ],
+						  [ 'Brain and Other Nervous System', 'Mortality',1.0],
+						  
+						  [ '2009', '20-24', 0.7 ],
+						  [ '20-24', 'Male', 0.7 ],
+						  [ 'Male', 'Brain and Other Nervous System', 0.7 ],
+						  [ 'Brain and Other Nervous System', 'Mortality', 0.7 ],
+						  
+						  [ '2009', '20-24', 2.6 ],
+						  [ '20-24', 'Male', 2.6 ],
+						  [ 'Male', 'Brain and Other Nervous System',2.6 ],
+						  [ 'Brain and Other Nervous System', 'Incidence', 2.6 ],
+						  
+						  [ '2009', '20-24', 0.3 ],
+						  [ '20-24', 'Male',0.3 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 0.3],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 0.3],
+						  
+						  [ '2009', '20-24', 1.6 ],
+						  [ '20-24', 'Male',1.6 ],
+						  [ 'Male', 'Thyroid', 1.6],
+						  [ 'Thyroid', 'Incidence', 1.6],
+						  
+						  [ '2009', '25-29', 1.0 ],
+						  [ '25-29', 'Male', 1.0 ],
+						  [ 'Male', 'Brain and Other Nervous System', 1.0 ],
+						  [ 'Brain and Other Nervous System', 'Mortality', 1.0 ],
+						  
+						  [ '2009', '25-29', 3.3 ],
+						  [ '25-29', 'Male', 3.3 ],
+						  [ 'Male', 'Brain and Other Nervous System', 3.3 ],
+						  [ 'Brain and Other Nervous System', 'Incidence', 3.3 ],
+						  
+						  [ '2009', '25-29', 0.2 ],
+						  [ '25-29', 'Male',0.2 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 0.2],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Mortality', 0.2],
+						  
+						  [ '2009', '25-29', 0.3 ],
+						  [ '25-29', 'Male',0.3 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct',0.3],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence',0.3],
+						  
+						  [ '2009', '25-29', 0.2 ],
+						  [ '25-29', 'Male',0.2 ],
+						  [ 'Male', 'Pancreas',0.2],
+						  [ 'Pancreas', 'Incidence',0.2],
+						  
+						  [ '2009', '25-29', 0.2 ],
+						  [ '25-29', 'Male',0.2 ],
+						  [ 'Male', 'Stomach',0.2],
+						  [ 'Stomach', 'Mortality',0.2],
+						  
+						  [ '2009', '25-29', 0.4 ],
+						  [ '25-29', 'Male',0.4 ],
+						  [ 'Male', 'Stomach',0.4],
+						  [ 'Stomach', 'Incidence',0.4],
+						  
+						  [ '2009', '25-29', 3.2 ],
+						  [ '25-29', 'Male',3.2 ],
+						  [ 'Male', 'Thyroid',3.2],
+						  [ 'Thyroid', 'Incidence',3.2],
+						  
+						  [ '2009', '30-34', 1.5 ],
+						  [ '30-34', 'Male', 1.5 ],
+						  [ 'Male', 'Brain and Other Nervous System', 1.5 ],
+						  [ 'Brain and Other Nervous System', 'Mortality', 1.5 ],
+						  
+						  [ '2009', '30-34', 3.9 ],
+						  [ '30-34', 'Male', 3.9 ],
+						  [ 'Male', 'Brain and Other Nervous System', 3.9 ],
+						  [ 'Brain and Other Nervous System', 'Incidence', 3.9 ],
+						  
+						  [ '2009', '30-34', 0.3 ],
+						  [ '30-34', 'Male', 0.3 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 0.3 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Mortality', 0.3 ],
+						  
+						  [ '2009', '30-34', 0.5 ],
+						  [ '30-34', 'Male', 0.5 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 0.5 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 0.5 ],
+						  
+						  [ '2009', '30-34', 0.3 ],
+						  [ '30-34', 'Male', 0.3 ],
+						  [ 'Male', 'Pancreas', 0.3 ],
+						  [ 'Pancreas', 'Mortality', 0.3 ],
+						  
+						  [ '2009', '30-34', 0.5 ],
+						  [ '30-34', 'Male', 0.5 ],
+						  [ 'Male', 'Pancreas', 0.5 ],
+						  [ 'Pancreas', 'Incidence', 0.5 ],
+						  
+						  [ '2009', '30-34', 0.4 ],
+						  [ '30-34', 'Male', 0.4 ],
+						  [ 'Male', 'Stomach', 0.4 ],
+						  [ 'Stomach', 'Mortality', 0.4 ],
+						  
+						  [ '2009', '30-34', 0.9 ],
+						  [ '30-34', 'Male', 0.9 ],
+						  [ 'Male', 'Stomach', 0.9 ],
+						  [ 'Stomach', 'Incidence', 0.9 ],
+						  
+						  [ '2009', '30-34', 5.1 ],
+						  [ '30-34', 'Male', 5.1 ],
+						  [ 'Male', 'Thyroid', 5.1 ],
+						  [ 'Thyroid', 'Incidence', 5.1 ],
+						  
+						  [ '2009', '35-39', 2.2 ],
+						  [ '35-39', 'Male', 2.2 ],
+						  [ 'Male', 'Brain and Other Nervous System', 2.2],
+						  [ 'Brain and Other Nervous System', 'Mortality', 2.2 ],
+						  
+						  [ '2009', '35-39', 4.2 ],
+						  [ '35-39', 'Male', 4.2 ],
+						  [ 'Male', 'Brain and Other Nervous System', 4.2],
+						  [ 'Brain and Other Nervous System', 'Incidence', 4.2 ],
+						  
+						  [ '2009', '35-39', 0.7 ],
+						  [ '35-39', 'Male', 0.7 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 0.7 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Mortality', 0.7 ],
+						  
+						  [ '2009', '35-39', 1.1 ],
+						  [ '35-39', 'Male', 1.1 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 1.1 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 1.1 ],
+						  
+						  [ '2009', '35-39', 0.8 ],
+						  [ '35-39', 'Male', 0.8 ],
+						  [ 'Male', 'Pancreas', 0.8 ],
+						  [ 'Pancreas', 'Mortality', 0.8 ],
+						  
+						  [ '2009', '35-39', 1.3 ],
+						  [ '35-39', 'Male', 1.3 ],
+						  [ 'Male', 'Pancreas', 1.3 ],
+						  [ 'Pancreas', 'Incidence', 1.3 ],
+						  
+						  [ '2009', '35-39', 0.9 ],
+						  [ '35-39', 'Male', 0.9 ],
+						  [ 'Male', 'Stomach', 0.9 ],
+						  [ 'Stomach', 'Mortality', 0.9 ],
+						  
+						  [ '2009', '35-39', 1.7 ],
+						  [ '35-39', 'Male', 1.7 ],
+						  [ 'Male', 'Stomach', 1.7 ],
+						  [ 'Stomach', 'Incidence', 1.7 ],
+						  
+						  [ '2009', '35-39', 6.8 ],
+						  [ '35-39', 'Male', 6.8 ],
+						  [ 'Male', 'Thyroid', 6.8 ],
+						  [ 'Thyroid', 'Incidence', 6.8 ],
+						  
+						  //40-44
+						  [ '2009', '40-44', 3.0 ],
+						  [ '40-44', 'Male', 3.0 ],
+						  [ 'Male', 'Brain and Other Nervous System', 3.0],
+						  [ 'Brain and Other Nervous System', 'Mortality', 3.0 ],
+						  
+						  [ '2009', '40-44', 5.4 ],
+						  [ '40-44', 'Male', 5.4 ],
+						  [ 'Male', 'Brain and Other Nervous System', 5.4],
+						  [ 'Brain and Other Nervous System', 'Incidence', 5.4 ],
+						  
+						  [ '2009', '40-44', 1.7 ],
+						  [ '40-44', 'Male', 1.7 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 1.7 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Mortality', 1.7 ],
+						  
+						  [ '2009', '40-44', 2.6 ],
+						  [ '40-44', 'Male', 2.6 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 2.6 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 2.6 ],
+						  
+						  [ '2009', '40-44', 2.1 ],
+						  [ '40-44', 'Male', 2.1 ],
+						  [ 'Male', 'Pancreas', 2.1],
+						  [ 'Pancreas', 'Mortality', 2.1 ],
+						  
+						  [ '2009', '40-44', 3.2],
+						  [ '40-44', 'Male', 3.2 ],
+						  [ 'Male', 'Pancreas', 3.2 ],
+						  [ 'Pancreas', 'Incidence', 3.2 ],
+						  
+						  [ '2009', '40-44', 1.4 ],
+						  [ '40-44', 'Male', 1.4 ],
+						  [ 'Male', 'Stomach', 1.4 ],
+						  [ 'Stomach', 'Mortality', 1.4 ],
+						  
+						  [ '2009', '40-44', 3.2 ],
+						  [ '40-44', 'Male', 3.2 ],
+						  [ 'Male', 'Stomach', 3.2 ],
+						  [ 'Stomach', 'Incidence', 3.2 ],
+						  
+						  [ '2009', '40-44', 0.2 ],
+						  [ '40-44', 'Male', 0.2 ],
+						  [ 'Male', 'Thyroid', 0.2 ],
+						  [ 'Thyroid', 'Mortality', 0.2 ],
+						  
+						  [ '2009', '40-44', 8.2 ],
+						  [ '40-44', 'Male', 8.2 ],
+						  [ 'Male', 'Thyroid', 8.2 ],
+						  [ 'Thyroid', 'Incidence', 8.2 ],
+						  
+						  //45-49
+						  
+						  [ '2009', '45-49', 4.2 ],
+						  [ '45-49', 'Male', 4.2 ],
+						  [ 'Male', 'Brain and Other Nervous System', 4.2],
+						  [ 'Brain and Other Nervous System', 'Mortality', 4.2 ],
+						  
+						  [ '2009', '45-49', 6.8 ],
+						  [ '45-49', 'Male', 6.8 ],
+						  [ 'Male', 'Brain and Other Nervous System', 6.8],
+						  [ 'Brain and Other Nervous System', 'Incidence', 6.8 ],
+						  
+						  [ '2009', '45-49', 5.1 ],
+						  [ '45-49', 'Male', 5.1 ],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 5.1 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Mortality', 5.1 ],
+						  
+						  [ '2009', '45-49', 8.9 ],
+						  [ '45-49', 'Male', 8.9],
+						  [ 'Male', 'Liver and Intrahepatic Bile Duct', 8.9 ],
+						  [ 'Liver and Intrahepatic Bile Duct', 'Incidence', 8.9 ],
+						  
+						  [ '2009', '45-49', 4.7 ],
+						  [ '45-49', 'Male', 4.7 ],	
+						  [ 'Male', 'Pancreas', 4.7],
+						  [ 'Pancreas', 'Mortality', 4.7 ],
+						  
+						  [ '2009', '45-49', 6.9],
+						  [ '45-49', 'Male', 6.9 ],
+						  [ 'Male', 'Pancreas', 6.9 ],
+						  [ 'Pancreas', 'Incidence', 6.9 ],
+						  
+						  [ '2009', '45-49', 2.4 ],
+						  [ '45-49', 'Male', 2.4 ],
+						  [ 'Male', 'Stomach', 2.4 ],
+						  [ 'Stomach', 'Mortality', 2.4 ],
+						  
+						  [ '2009', '45-49', 5.5 ],
+						  [ '45-49', 'Male', 5.5 ],
+						  [ 'Male', 'Stomach', 5.5 ],
+						  [ 'Stomach', 'Incidence', 5.5 ],
+						  
+						  [ '2009', '45-49', 0.2 ],
+						  [ '45-49', 'Male', 0.2 ],
+						  [ 'Male', 'Thyroid', 0.2 ],
+						  [ 'Thyroid', 'Mortality', 0.2 ],
+						  
+						  [ '2009', '45-49', 9.9 ],
+						  [ '45-49', 'Male', 9.9 ],
+						  [ 'Male', 'Thyroid', 9.9 ],
+						  [ 'Thyroid', 'Incidence', 9.9 ],
+
+			 
+			]);
+
+			// Sets chart options.
+			var options = {
+			  width: 1000,
+			sankey: { node: { nodePadding: 80 } },
+			  sankey: {
+				  node: { label: { fontName: 'Times-Roman',
+								   fontSize: 10,
+								   color: '#871b47',
+								   bold: true,
+								   italic: true } } },
+			};
+
+			// Instantiates and draws our chart, passing in some options.
+			var chart = new google.visualization.Sankey(document.getElementById('sankey_basic'));
+			chart.draw(data, options);
+		  }
+	</script>
+</head>
+<body data-spy="scroll" data-offset="0" data-target="#navbar-main" onload="loadMe();">
+<div id="navbar-main"> 
+  <!-- Fixed navbar -->
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+        <a class="navbar-brand" href="index.html">OncoStudy Inc</a> </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="index.html" class="smoothScroll">Home</a></li>
+		  <li><a href="human-body.html" class="smoothScroll">3D Human Body</a></li>
+          <li> <a href="about-us.html" class="smoothScroll"> About Us</a></li>
+          <li> <a href="cancer-statistics.html" class="smoothScroll"> Cancer Statistics</a></li>
+          <li> <a href="contact-us.html" class="smoothScroll"> Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</br>
+</br>
+</br>
+<h2 class="centered">Cancer Types</h2>
+<hr>
+<div id="imagesCarousel" class="carousel slide" data-ride="carousel" style="display:none">
+	<!-- Indicators -->
+	<ol class="carousel-indicators">
+		<li data-target="#imagesCarousel" data-slide-to="0" class="active"></li>
+		<li data-target="#imagesCarousel" data-slide-to="1"></li>
+		<li data-target="#imagesCarousel" data-slide-to="2"></li>
+		<li data-target="#imagesCarousel" data-slide-to="3"></li>
+	</ol>
+	<!-- Wrapper for slides -->
+	<div class="carousel-inner">
+		<div class="item active">
+			<img src="img/organs/graviola-treat-liver-disorders.jpg">
+			<!--<div><img src="img/organs/graviola-treat-liver-disorders.jpg"><span style="color:red;font-size: 50pt">Liver Cancer</span></div>
+			<p align="justify" style="margin-right:200px; margin-left:200px">HCC is the fifth most common cancer in the world. Many patients with HCC do not develop symptoms until the advanced stages of the tumor. Some liver diseases, most notably hepatitis B infection, can cause HCC even in the absence of cirrhosis. The combination of an imaging study (Ultrasound, CT, or MRI scans) and an elevated blood level of alpha-fetoprotein most effectively diagnoses HCC. In the U.S., patients with associated cirrhosis 
+				caused by chronic hepatitis B or C infections, alcohol, and hemochromatosis are at the greatest risk of developing HCC. Patients with chronic liver disease (e.g., HCV, HBV, or hemochromatosis) should avoid drinking alcohol, which can further increase their risk of developing cirrhosis and HCC. Surgical resection (removal) of the tumor may be very effective for a select group of individuals with HCC, specifically for those with small tumors and excellent 
+				liver function. For patients with small HCC and significant associated liver disease, liver transplantation offers the best chance for cure. </p>-->
+		</div>
+		<div class="item">
+			<img src="img/organs/intestinal-cancer.jpg" style="align:center">
+			<!--<div><img src="img/organs/intestinal-cancer.jpg" style="align:center"><span style="color:red;font-size: 50pt">Intestinal Cancer</span></div>
+			<p align="justify" style="margin-right:200px; margin-left:200px">The small intestine is a long, coiled tube that funnels digested food from the stomach into the colon (the large intestine). Along the way, the digested material is further broken down and nutrients and amino acids are absorbed.
+				The material first enters the duodenum, one of three sections of the small intestine where digestion is aided by enzymes secreted by the pancreas and bile from the liver. The middle section, the jejunum, propels the food into the ileum, the final and longest section food travels through before being emptied into the colon. Absorption of vitamins, proteins, carbohydrates and nucleic acids happens as the food moves through the jejunum and ileum.
+				Tumors in the small intestine may block the flow of food and affect digestion. As the tumor gets bigger, the blockages may cause pain in the abdomen. A slowly bleeding tumor may lead to anemia. Digested blood may cause the stool to become black or tarry. An obstruction—when the flow of food is completely blocked—may cause intense pain, nausea and vomiting and typically requires immediate surgery. </p>-->
+		</div>
+		<div class="item">
+			<img src="img/organs/lungs.jpg">
+			<!--<div><img src="img/organs/lungs.jpg"><span style="color:red;font-size: 50pt">Lung Cancer</span></div>
+			<p align="justify" style="margin-right:200px; margin-left:200px">Scientists have discovered that the way light reacts with human cells may indicate the likelihood of a person having lung cancer.
+				Patients with lung tumours were found to have subtle abnormalities in the cells of their mouth, lungs and nose.
+				Using swabs from patients’ cheeks, researchers from University College London found that cells of lung cancer patients reflected and refracted light slightly differently to those who did not have the disease. </p>-->
+		</div>
+		<div class="item">
+			<img src="img/organs/pancreatic-cancer-detection.jpg">
+			<!--<div><img src="img/organs/pancreatic-cancer-detection.jpg"><span style="color:red;font-size: 50pt">Pancreatic Cancer</span></div>
+			<p align="justify" style="margin-right:200px; margin-left:200px">If you are living at a high latitude or in a place with a lot of heavy cloud cover, you cannot make vitamin D most of the year, which results in a higher-than-normal risk of getting pancreatic cancer," said first author Cedric Garland from the University of California San Diego School of Medicine. 
+				According to the study, people who live in sunny countries near the equator have only one-sixth of the age-adjusted incidence rate of pancreatic cancer as those who live far from it. 
+				"The importance of sunlight deficiency strongly suggests - but does not prove - that vitamin D deficiency may contribute to the development of pancreatic cancer," Garland noted. 
+				The body naturally produces Vitamin D when the skin is directly exposed to sunlight. Some foods also contain vitamin D. While fatty fish, such as salmon and tuna, are good sources, cheese and egg yolks provide small amounts. 
+				The researchers studied data from 107 countries, taking into account international differences and possible confounders, such as alcohol consumption, obesity and smoking.  </p>-->
+		</div>
+		<div class="item">
+			<img src="img/organs/thyroid gland.jpg">
+			<!--<div><img src="img/organs/thyroid gland.jpg"><span style="color:red;font-size: 50pt">Thyroid Cancer</span></div>
+			<p align="justify" style="margin-right:200px; margin-left:200px">The thyroid gland regulates hormones in the body that control heart rate, blood pressure, weight, and body temperature. Thyroid cancer forms in the thyroid gland and is broken down into four main types: papillary, follicular, medullary, and anaplastic. Papillary thyroid cancer is the most common type and grows slowly in the follicular cells. 
+				Follicular thyroid cancer is slightly less common but also grows slowly in the follicular cells. Both forms look similar to normal thyroid tissue under a microscope and account for over 90% of all thyroid cancers. These two forms are often curable when found under the age of 45. Medullary thyroid cancer develops in the C cells and is sometimes the result of a genetic syndrome. 
+				This cancer does not resemble normal thyroid tissue and accounts for almost 5% of thyroid cancers. This type can be controlled if it is diagnosed before metastasis. The anaplastic form of thyroid cancer is the least common at 2%, but it is fast growing and harder to treat. Staging your cancer is the process of finding out if and how far a cancer has spread. 
+				The stage of a cancer is one of the most important factors in choosing treatment options and predicting your prognosis. </p>-->
+		</div>
+	</div>
+		<!-- Controls -->
+	<a class="left carousel-control" href="#imagesCarousel" data-slide="prev">
+		<span class="glyphicon glyphicon-chevron-left"></span>
+	</a>
+	<a class="right carousel-control" href="#imagesCarousel" data-slide="next">
+		<span class="glyphicon glyphicon-chevron-right"></span>
+	</a>
+</div>
+<div id="lungs" style="display:none">
+	<h2 class="centered"> Statistics of Lung Cancer</h2>
+	<hr>
+	<h4> Number of people diagnosed with lung cancer per 100,00 in year 2011</h4>
+    <div id="regions_div" style="width: 900px; height: 500px;"></div>
+	</br>
+	</br>
+	<div id="dual_y_div" style="width: 900px; height: 500px;"></div>
+	</br>
+	</br>
+	<div id="sankey_basic" style="width: 900px; height: 300px;"></div>
+</div>
+<div id="thyroid" style="display:none">
+	<h2 class="centered"> Statistics of Thyroid Cancer</h2>
+	<hr>
+	<h4> Number of people diagnosed with thyroid cancer per 100,00 in year 2011</h4>
+    <div id="regions_div" style="width: 900px; height: 500px;"></div>
+	</br>
+	</br>
+	<div id="dual_y_div" style="width: 900px; height: 500px;"></div>
+	</br>
+	</br>
+	<div id="sankey_basic" style="width: 900px; height: 300px;"></div>
+</div>
+<div id="pancreas" style="display:none">
+	<h2 class="centered"> Statistics of Pancreatic Cancer</h2> 
+	<hr>
+	<h4> Number of people diagnosed with pancreatic cancer per 100,00 in year 2011</h4>
+    <div id="regions_div" style="width: 900px; height: 500px;"></div>
+	</br>
+	</br>
+	<div id="dual_y_div" style="width: 900px; height: 500px;"></div>
+	</br>
+	</br>
+	<div id="sankey_basic" style="width: 900px; height: 300px;"></div>
+</div>
+<div id="liver" style="display:none">
+	<h2 class="centered"> Statistics of Liver Cancer</h2> 
+	<hr>
+	<h4> Number of people diagnosed with liver cancer per 100,00 in year 2011</h4>
+    <div id="regions_div" style="width: 900px; height: 500px;"></div>
+	</br>
+	</br>
+	<div id="dual_y_div" style="width: 900px; height: 500px;"></div>
+	</br>
+	</br>
+	<div id="sankey_basic" style="width: 900px; height: 300px;"></div>
+</div>
+<div id="intestine" style="display:none">
+	<h2 class="centered"> Statistics of Intestinal Cancer</h2> 
+	<hr>
+	<h4> Number of people diagnosed with intestinal cancer per 100,00 in year 2011</h4>
+    <div id="regions_div" style="width: 900px; height: 500px;"></div>
+	</br>
+	</br>
+	<div id="dual_y_div" style="width: 900px; height: 500px;"></div>
+	</br>
+	</br>
+	<div id="sankey_basic" style="width: 900px; height: 300px;"></div>
+</div>
+<div id="footerwrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8"> <span class="copyright">Copyright &copy; 2015 OncoStudy Inc. Design by WebDevelopers</span> </div>
+      <div class="col-md-4">
+        <ul class="list-inline social-buttons">
+          <li><a href="#"><i class="fa fa-twitter"></i></a> </li>
+          <li><a href="#"><i class="fa fa-facebook"></i></a> </li>
+          <li><a href="#"><i class="fa fa-google-plus"></i></a> </li>
+          <li><a href="#"><i class="fa fa-linkedin"></i></a> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="js/bootstrap.min.js"></script> 
+<script type="text/javascript" src="js/retina.js"></script> 
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script> 
+<script type="text/javascript" src="js/smoothscroll.js"></script> 
+<script type="text/javascript" src="js/jquery-func.js"></script>
+</body>
+</html>
