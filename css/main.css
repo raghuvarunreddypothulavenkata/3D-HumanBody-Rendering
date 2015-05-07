@@ -230,6 +230,9 @@ a:before, a:after {
 	text-align: center;
 	letter-spacing: 3px;
 }
+#headerwrap h2 {
+	color: #fff;
+}
 #headerwrap p {
 	color: #fff;
 	font-size: 22px;
@@ -279,13 +282,33 @@ a:before, a:after {
 	text-align: center;
 }
 #team {
-	background: #f5f5f5;
-	padding: 60px 0;
+	background: url(../img/header_bg.jpg) no-repeat center top;
+	margin-top: -50px;
+	padding-top: 120px;
+	text-align: center;
+	background-attachment: relative;
+	background-position: center center;
+	min-height: 650px;
+	width: 100%;
+	-webkit-background-size: 100%;
+	-moz-background-size: 100%;
+	-o-background-size: 100%;
+	background-size: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	padding-bottom: 100px;
 }
 #team H4 {
+	color: #fff;
 	padding-top: 10px;
 }
+#team H2 {
+	color: #fff;
+}
 #team p.large {
+	color: #fff;
 	margin-top: 60px;
 	margin-bottom: 40px;
 }
@@ -314,9 +337,32 @@ a:before, a:after {
 	border: 0;
 }
 #contact {
-	background: #fff;
-	padding: 60px 0;
+	background: url(../img/header_bg.jpg) no-repeat center top;
+	margin-top: -50px;
+	padding-top: 120px;
 	text-align: center;
+	background-attachment: relative;
+	background-position: center center;
+	min-height: 650px;
+	width: 100%;
+	-webkit-background-size: 100%;
+	-moz-background-size: 100%;
+	-o-background-size: 100%;
+	background-size: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	padding-bottom: 100px;
+}
+#contact H2 {
+	color: #fff;
+}
+#contact p {
+	color: #fff;
+}
+#contact a {
+	color: #00f;
 }
 #contact .form {
 	padding: 30px 0;
@@ -546,20 +592,7 @@ body .header {
   margin:0 auto;
 }
 .carousel-inner {
-  width: 900px;
-}
-#manage ul{
-  padding:0 0 0 0;
-  margin:0 0 0 0;
-}
-#manage ul > li{
-  list-style:none;
-}
-#manage ul > li > img {
-  border: 3px;
-  border-color: #000000;
-  margin-bottom: 20px;
-  cursor: pointer;
+  width: 500px;
 }
 .accolade p {
     margin: 10px 0;
@@ -579,15 +612,6 @@ body .header {
     border: 10px solid transparent;
     width: 20px;
     border-bottom-color: #fff;
-}
-.download:first-child {
-    margin-top: 60px;
-}
-.download {
-    margin-top: 20px;
-    min-height: 40px;
-    padding: 10px;
-    cursor: pointer;
 }
 .accolade-container {
     padding-top: 20px;

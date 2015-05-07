@@ -36,9 +36,9 @@
         <ul class="nav navbar-nav navbar-right">
           <li><a href="index.html" class="smoothScroll">Home</a></li>
 		  <li><a href="human-body.html" class="smoothScroll">3D Human Body</a></li>
-          <li> <a href="about-us.html" class="smoothScroll"> About Us</a></li>
           <li> <a href="cancer-statistics.html" class="smoothScroll"> Cancer Statistics</a></li>
-          <li> <a href="contact-us.html" class="smoothScroll"> Contact</a></li>
+          <li> <a href="contact-us.html" class="smoothScroll"> Contact Us</a></li>
+		  <li> <a href="about-us.html" class="smoothScroll"> About Us</a></li>
         </ul>
       </div>
     </div>
@@ -90,7 +90,7 @@
 			skindae = collada.scene;
 			var skin = collada.skins[ 0 ];
 			skindae.position.set(0,-50,0);//x,z,y- if you think in blender dimensions ;)
-			skindae.scale.set(11,11,11);
+			skindae.scale.set(9,9,9);
 			scene.add(skindae);
 		});
 		controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -103,20 +103,20 @@
 			loader.load( 'models/myHuman.dae', function ( collada ) {
 				humandae = collada.scene;
 				var skin = collada.skins[ 0 ];
-				humandae.position.set(0,-40,0);//x,z,y- if you think in blender dimensions ;)
-				humandae.scale.set(11,11,11);
+				humandae.position.set(0,-50,0);//x,z,y- if you think in blender dimensions ;)
+				humandae.scale.set(6,6,6);
 				scene.add(humandae);
 			});
 		}
 		else {
-			if(typeof humandae === 'object') {
+			if(typeof humandae === 'object' & humandae != null) {
 				scene.remove(humandae);
 				humandae = null;
 				loader.load( 'models/humanSkin.dae', function ( collada ) {
 					skindae = collada.scene;
 					var skin = collada.skins[ 0 ];
 					skindae.position.set(0,-50,0);//x,z,y- if you think in blender dimensions ;)
-					skindae.scale.set(11,11,11);
+					skindae.scale.set(9,9,9);
 					scene.add(skindae);
 				});
 			}
